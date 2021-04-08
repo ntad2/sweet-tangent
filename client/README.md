@@ -23,12 +23,12 @@
 3. compile & run: $ npm start
    - the Metro Bundler will open up in your web browser
    - click on the "Run in web browser" link, wait for it, the web app will appear
-   - see below for Android and iOS
+   - for Android and iOS, see below
 4. use Ctrl-C to stop
 
 ### Running on iOS and Android
 
-See the setup steps in the tutorial, https://youtu.be/0-S5a0eXPoc
+See the setup steps in the tutorial, https://youtu.be/0-S5a0eXPoc. Definitely install Expo Client on your iOS and Android phone and/or tablet (see Running on a physical device). Then you'll be able to play with any app deployed with Expo.
 
 - 0:14:38​ Running on an iOS simulator
 - 0:18:02​ Running on an Android emulator
@@ -40,3 +40,19 @@ See the steps in the tutorial, https://youtu.be/0-S5a0eXPoc
 
 - 0:29:16​ Debugging with Chrome
 - 0:34:27​ Debugging in VSCode
+
+### Development
+
+DO NOT use HTML tags and CSS styles. Use react-native-paper components as much as possible because they will compile into native components for mobile platforms as well as html for web browsers. https://callstack.github.io/react-native-paper/index.html
+
+Secondly, use React Native components, https://reactnative.dev/docs/getting-started and if needed, code separately for web and use material-ui components as much as possible, https://material-ui.com/.
+
+React Native has its own CSS syntax/stlyes so us that instead of regular CSS.
+
+Our main technologies:
+
+- Node.js and ReactJS
+- React Native (for mobile app development) and Expo (dev env for React Native)
+- react-native-paper (Cross-platform Material Design for React Native)
+- react-native-web (build React Native components for the web)
+- @expo/match-media react-responsive (Media Queries / Responsive Design)
