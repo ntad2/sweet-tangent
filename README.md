@@ -6,6 +6,12 @@ By contributing to this project you agree to grant the project owner a non-exclu
 
 If you don't already have a GitHub account, you'll need to create one. Then ask the project lead to add you to this project. If you don't already know git, please take a quick tutorial.
 
+### Projects
+
+1. client -- This is our main app for frontend (client) development. It is using react-native (for mobile app dev) but it can also generate a web app (with the react-native-web package).
+2. web-app -- This is an optional project for anyone who just wants to focus on web development only. TBD is whether we'll keep these web and mobile app development separate or combine them in the future.
+3. (coming soon) api -- The backend (server) project that will implement the business logic (including authentication, spam/solicitation checking, security, etc.) and read/write dynamic data from storage.
+
 See the README.md file under each folder for that project's instructions.
 
 ### Making code changes:
