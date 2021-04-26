@@ -1,20 +1,20 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-paper';
-//import { NativeRouter, Route, Link } from "react-router-native";
+import { StyleSheet, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 // NOTE: react-router-native crashes on web build (with react-native-web) so we have to build this navigation ourselves
+//import { NativeRouter, Route, Link } from "react-router-native";
+
+import { mainStyles as styles } from '../styles/app';
 
 function Welcome(props) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text>Hello Mobile Users 👋</Text>
-      <View style={styles.container2}>
-        <Button icon="camera" mode="contained" onPress={props.onEnter}>
-          Enter
-        </Button>
-      </View>
+      <Button icon="camera" mode="contained" onPress={props.onEnter}>
+        Enter
+      </Button>
     </View>
   )
 }
@@ -29,10 +29,12 @@ function FirstPage(props) {
 
 function MainBody(props) {
   return (
-    <View style={styles.container2}>
-      <Button onPress={props.gotoHome}> Home </Button>
-      <Button onPress={props.gotoPeople} > People </Button>
-      <Button onPress={props.gotoTangents}> Tangents </Button>
+    <View style={styles.navWrap}>
+      <View  style={styles.nav}>
+      <Button style={styles.navItem} onPress={props.gotoHome}> Home </Button>
+      <Button style={styles.navItem} onPress={props.gotoPeople} > People </Button>
+      <Button style={styles.navItem} onPress={props.gotoTangents}> Tangents </Button>
+      </View>
     </View>
   )
 }
@@ -87,42 +89,3 @@ export default class MainMobile extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bigText: {
-    fontWeight: '900',
-    fontSize: 24
-  },
-  mobile: {
-    fontStyle: 'italic'
-  },
-  container2: {
-    marginTop: 25,
-    padding: 10,
-    width: '100%',
-  },
-  header: {
-    fontSize: 20,
-  },
-  nav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  navItem: {
-    flex: 1,
-    alignItems: "center",
-    padding: 10,
-    color: "blue",
-  },
-  subNavItem: {
-    padding: 5
-  },
-  topic: {
-    textAlign: "center",
-    fontSize: 15
-  }
-});
