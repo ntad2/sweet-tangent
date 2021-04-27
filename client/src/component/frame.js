@@ -9,24 +9,48 @@
 */
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
+import { WebView } from "react-native-webview";
 
-import { textStyles as txt, alignStyles as align, 
-  stylesMobile, stylesWeb } from '../styles/app';
+import { stylesMobile, stylesWeb, commonStyles as cmmn } from '../styles/app';
 
-function showTitle(title) {
-  return <View style={align.center}>
-      <Text style={txt.sm}>{title}</Text>
+function showTitle(title, style) {
+  return <View style={style}>
+      <Text>{title}</Text>
     </View>
 }
 function showPhoto (imgFile) {
+  // object-fit: 'cover'  // to keep aspect ratio
   return <Image source={{ uri: imgFile }}
-    style={{ width: '100%', height: '100%' }} />
-}   // object-fit: 'cover'  // to keep aspect ratio
+    style={{ width: '100%', height: '100%' }} 
+  />
+}
+function showVideo (videoSrc, title, isMobile) {
+  if (isMobile) {
+    return <WebView
+      source={{ uri: videoSrc }}
+      javaScriptEnabled={true}
+      domStorageEnabled={true}   
+    />
+  }
+  return <iframe width='200' height='150'
+    src={ videoSrc }
+    title={title} frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>  
+}
+function showBlog (text) {
+  return <Text>{text}</Text>
+}
 
 export default function Frame(props) {
-  let styles = stylesMobile; if (!props.isMobile) { styles = stylesWeb; }
+  const item = props.item;
+  const isMobile = props.isMobile;
+  // responsive
+  let resp = stylesMobile; if (!isMobile) { resp = stylesWeb; }
 
+  // customization
   let border = {
     height: 200,   // default to portrait
     width: 150,
@@ -34,7 +58,6 @@ export default function Frame(props) {
     borderWidth: 2,
     borderColor: 'gray',
   }
-  const item = props.item;
   if (item.layout == "landscape") {
     border.width = 200; 
     border.height = 150;
@@ -46,19 +69,25 @@ export default function Frame(props) {
     border.borderWidth = 0;
   }
   
+  // events
+  // note: onClick for View is onStartShouldSetResponder 
   function handleClick(e) {
     e.preventDefault();
     props.onClicked(item.id);
   }
 
-  // note: onClick for View is onStartShouldSetResponder 
   return (
-    <View style={styles.frameMargin} onStartShouldSetResponder={handleClick}>
+    <View style={resp.frameMargin} onStartShouldSetResponder={handleClick}>
+      { item.type=='blog' && item.title && showTitle(item.title, resp.blogTitle) }
+
       <View style={border}>
         { !item.type && <Text>This is an empty frame.</Text> }
         { item.type=='photo' && showPhoto(item.image) }
+        { item.type=='video' && showVideo(item.source, item.title, isMobile) }
+        { item.type=='blog' && showBlog(item.text) }
       </View>
-      { item.title && showTitle(item.title) }
+      
+      { item.type!='blog' && item.title && showTitle(item.title, cmmn.frameTitle) }
       {/* TODO: put likes/comments here */}
     </View>
   );
