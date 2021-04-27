@@ -6,6 +6,7 @@ import { Button, Text } from 'react-native-paper';
 //import { NativeRouter, Route, Link } from "react-router-native";
 
 import { mainStyles as styles } from '../styles/app';
+import Home from '../page/home';
 
 function Welcome(props) {
   return (
@@ -40,7 +41,6 @@ function MainBody(props) {
 }
 
 // These will become separate pages
-const Home = () => <View style={styles.container}><Text style={styles.header}>Home Page</Text></View>;
 const People = () => <View style={styles.container}><Text style={styles.header}>All People</Text></View>;
 const Tangents = () => <View style={styles.container}><Text style={styles.header}>All Tangents</Text></View>;
 
@@ -48,8 +48,8 @@ export default class MainMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-      currentPage: 'none'
+      isLoggedIn: true,
+      currentPage: 'home'
      }
   }
 
@@ -81,7 +81,7 @@ export default class MainMobile extends React.Component {
       <View>
         <FirstPage isLoggedIn={this.state.isLoggedIn} onEnter={this.EnterClicked} 
           gotoHome={this.gotoHome} gotoPeople={this.gotoPeople} gotoTangents={this.gotoTangents} />
-        { isHome && <Home/> }
+        { isHome && <Home isMobile={true} /> }
         { isPeople && <People/> }
         { isTangents && <Tangents/> }
       </View>
