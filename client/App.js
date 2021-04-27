@@ -18,6 +18,9 @@ export default function App() {
     // alternatively...
     query: "(max-device-width: 1224px)"  
   });
+  // TODO: checks for different widths for tablets, smaller phones, etc.
+  // pass this value (instead of just a isMobile flag) to child components 
+  // for prettier responsive layouts
 
   function Body() {
     if (isTabletOrMobileDevice) {

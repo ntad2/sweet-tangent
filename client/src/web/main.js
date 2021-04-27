@@ -4,20 +4,24 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import Header from './header';
 import Footer from './footer';
+import Home from '../page/home';
 
 export default function MainWeb() {
-  const Home = () => <View style={styles.container}><Text style={styles.header}>Home Page</Text></View>;
   const People = () => <View style={styles.container}><Text style={styles.header}>All People</Text></View>;
   const Tangents = () => <View style={styles.container}><Text style={styles.header}>All Tangents</Text></View>;
   const Notfound = () => <View style={styles.container}><Text style={styles.header}>Not Found</Text></View>;
   
+  const PageHome = () => {
+    return <Home isMobile={false} />
+  }
+
   return (
     <Router>
       <div>
         <Header />
         <hr />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={PageHome} />
           <Route path="/people" component={People} />
           <Route path="/tangents" component={Tangents} />
           <Route component={Notfound} />
