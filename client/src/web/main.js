@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from './header';
 import Footer from './footer';
 import Home from '../page/home';
+import Instance from '../page/instance';
 
 export default function MainWeb() {
   const People = () => <View style={styles.container}><Text style={styles.header}>All People</Text></View>;
@@ -12,7 +13,8 @@ export default function MainWeb() {
   const Notfound = () => <View style={styles.container}><Text style={styles.header}>Not Found</Text></View>;
   
   const PageHome = () => {
-    return <Home isMobile={false} />
+    //return <Home isMobile={false} />
+    return <Instance isMobile={false} />
   }
 
   return (

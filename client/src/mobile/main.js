@@ -1,93 +1,80 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 // NOTE: react-router-native crashes on web build (with react-native-web) so we have to build this navigation ourselves
-//import { NativeRouter, Route, Link } from "react-router-native";
 
 import { styles as styles } from '../styles/main';
 import Home from '../page/home';
+import Instance from '../page/instance';
 
+// These will become separate pages
+const People = () => <View style={styles.tempSpace}><Text style={styles.header}>All People - coming soon...</Text></View>;
+const Tangents = Instance;    // display this page for now
+
+// FUTURE: we'll add authentication here
 function Welcome(props) {
   return (
-    <View style={styles.tempSpace}>
+    <SafeAreaView style={styles.centerAll}>
       <StatusBar style="auto" />
       <Text>Hello Mobile Users 👋</Text>
       <Button icon="camera" mode="contained" onPress={props.onEnter}>
         Enter
       </Button>
-    </View>
+    </SafeAreaView>
   )
-}
-
-function FirstPage(props) {
-  const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
-    return <MainBody onNavigate={props.onNavigate} gotoHome={props.gotoHome} gotoPeople={props.gotoPeople} gotoTangents={props.gotoTangents} />
-  }
-  return <Welcome onEnter={props.onEnter} />
 }
 
 function MainBody(props) {
   return (
-    <View style={styles.navWrap}>
-      <View  style={styles.nav}>
-      <Button style={styles.navItem} onPress={props.gotoHome}> Home </Button>
-      <Button style={styles.navItem} onPress={props.gotoPeople} > People </Button>
-      <Button style={styles.navItem} onPress={props.gotoTangents}> Tangents </Button>
-      </View>
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.navWrap}>
+          <View  style={styles.nav}>
+          <Button style={styles.navItem} onPress={ () => props.onNavigate('home') }> Home </Button>
+          <Button style={styles.navItem} onPress={ () => props.onNavigate('people') }> People </Button>
+          <Button style={styles.navItem} onPress={ () => props.onNavigate('tangents') }> Tangents </Button>
+          </View>
+        </View>
+        <View>
+          { props.currentPage=='home' && <Home isMobile={true} /> }
+          { props.currentPage=='people' && <People isMobile={true} /> }
+          { props.currentPage=='tangents' && <Tangents isMobile={true} /> }
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
-// These will become separate pages
-const People = () => <View style={styles.tempSpace}><Text style={styles.header}>All People</Text></View>;
-const Tangents = () => <View style={styles.tempSpace}><Text style={styles.header}>All Tangents</Text></View>;
+function Authenticate(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <MainBody currentPage={props.currentPage} onNavigate={props.onNavigate} 
+      gotoHome={props.gotoHome} gotoPeople={props.gotoPeople} gotoTangents={props.gotoTangents} />
+  }
+  return <Welcome onEnter={props.onEnter} />
+}
 
 export default class MainMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-      currentPage: ''
+      isLoggedIn: true,
+      currentPage: 'home'
      }
   }
 
   EnterClicked=()=>{
     this.setState({isLoggedIn: true, currentPage: 'home'});
   }
-
-  // I haven't gotten this working yet
   doNavigate=(gotoPage)=>{
-    this.setState({currentPage: 'tangents'});
+    this.setState({currentPage: gotoPage});
   }
-
-  gotoHome=()=>{
-    this.setState({currentPage: 'home'});
-  }
-  gotoPeople=()=>{
-    this.setState({currentPage: 'people'});
-  }
-  gotoTangents=()=>{
-    this.setState({currentPage: 'tangents'});
-  }
-
+  
   render() {
-    const isHome = this.state.currentPage=='home'?true:false;
-    const isPeople = this.state.currentPage=='people'?true:false;
-    const isTangents = this.state.currentPage=='tangents'?true:false;
-
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          <FirstPage isLoggedIn={this.state.isLoggedIn} onEnter={this.EnterClicked} 
-            gotoHome={this.gotoHome} gotoPeople={this.gotoPeople} gotoTangents={this.gotoTangents} />
-          { isHome && <Home isMobile={true} /> }
-          { isPeople && <People/> }
-          { isTangents && <Tangents/> }
-        </ScrollView>
-      </View>
+      <Authenticate isLoggedIn={this.state.isLoggedIn} currentPage={this.state.currentPage}
+        onEnter={this.EnterClicked} onNavigate={this.doNavigate} gotoHome={this.gotoHome} />
     );
   }
 }
-
