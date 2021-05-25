@@ -1,17 +1,16 @@
 import { StyleSheet } from 'react-native';
 
+// specific styles for the main page (for mobile and web)
+// also for the header and footer
+// NOTE: use our common styles whenever possible
 export const styles = StyleSheet.create({
-  container: {
+  centerAll: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tempSpace: {
-    marginTop: 300,
-  },
   navWrap: {
-    marginTop: 10,
+    marginTop: 30,
     padding: 5,
     width: '100%',
   },
@@ -28,18 +27,14 @@ export const styles = StyleSheet.create({
   subNavItem: {
     padding: 5
   },
+
+  tempSpace: {
+    marginTop: 300,
+    width: '100%',
+    alignContent: "center",
+  },
   header: {
     fontSize: 20,
   },
-  topic: {
-    textAlign: "center",
-    fontSize: 15
-  },
-  bigText: {
-    fontWeight: '900',
-    fontSize: 24
-  },
-  mobile: {
-    fontStyle: 'italic'
-  },
+  
 });

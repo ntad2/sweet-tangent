@@ -78,3 +78,20 @@ export function TestBlogFrame(props) {
     <Frame item={item} isMobile={props.isMobile} onClicked={handleClick} />
   )  
 }
+
+import {frameItems as data} from './data/frameData';
+export function TestFrameWithJson(props) {
+  const items = data.map( (item) => {
+    return <Frame item={item} onClicked={handleClick} />
+  })
+
+  function handleClick(id) {
+    console.log("Clicked on item #" + id);
+  }
+
+  return (
+    <view>
+      { items }
+    </view>
+  )  
+}
