@@ -35,9 +35,9 @@ function showVideo (videoSrc, title, isMobile) {
   }
   return <iframe width='200' height='150'
     src={ videoSrc }
-    title={title} frameborder="0" 
+    title={title} frameBorder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
+    allowFullScreen>
   </iframe>  
 }
 function showBlog (text) {
@@ -73,7 +73,7 @@ export default function Frame(props) {
   // note: onClick for View is onStartShouldSetResponder 
   function handleClick(e) {
     e.preventDefault();
-    props.onClicked(item.id);
+    props.onClicked(item);
   }
 
   return (
@@ -83,8 +83,8 @@ export default function Frame(props) {
       <View style={border}>
         { !item.type && <Text>This is an empty frame.</Text> }
         { item.type=='photo' && showPhoto(item.image) }
-        { item.type=='video' && showVideo(item.source, item.title, isMobile) }
-        { item.type=='blog' && showBlog(item.text) }
+        { item.type=='video' && showVideo(item.video, item.title, isMobile) }
+        { item.type=='blog' && showBlog(item.blog) }
       </View>
       
       { item.type!='blog' && item.title && showTitle(item.title, cmmn.frameTitle) }
